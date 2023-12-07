@@ -13,5 +13,14 @@
   "devDependencies": {
     "@types/node": "^20.10.3",
     "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^9.2.0",
+    "aws-sdk": "^2.1513.0",
+    "dotenv": "^16.3.1",
+    "fastify-autoroutes": "^3.0.2",
+    "mysql2": "^3.6.5",
+    "sequelize": "^6.35.1",
+    "ts-node": "^10.9.1"
   }
 }
