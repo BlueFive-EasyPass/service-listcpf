@@ -1,4 +1,4 @@
-import { IDomain } from "../interfaces/domainInterface";
+import { IArray, IDomain } from "../interfaces/domainInterface";
 import { IRepository } from "../interfaces/interfaceRepository";
 import { IService } from "../interfaces/interfaceService";
 
@@ -8,7 +8,7 @@ export class Service implements IService {
         this.repository = repository
     }
 
-    async save(data: IDomain['data']): Promise<boolean> {
+    async save(data: IArray): Promise<boolean> {
         try {
             const result = await this.repository.save(data)
             return result

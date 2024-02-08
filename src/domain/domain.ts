@@ -1,17 +1,20 @@
-import { IDomain } from "../interfaces/domainInterface";
+import { IArray, IDomain } from "../interfaces/domainInterface";
 import { IService } from "../interfaces/interfaceService";
 
 export class Domain implements IDomain {
     data: IDomain['data'];
     private service: IService
-    constructor(data: IDomain['data'], service: IService) {
+    private array: IArray
+
+    constructor(data: IDomain['data'], service: IService, array: IArray) {
         this.data = data
         this.service = service
+        this.array = array
     }
 
     async save() {
         try {
-            const result = await this.service.save(this.data)
+            const result = await this.service.save(this.array)
             return result
         } catch (error) {
             throw error

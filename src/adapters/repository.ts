@@ -1,4 +1,4 @@
-import { IDomain } from "../interfaces/domainInterface";
+import { IArray, IDomain } from "../interfaces/domainInterface";
 import { IModelDB } from "../interfaces/interfaceModel";
 import { IRepository } from "../interfaces/interfaceRepository";
 
@@ -7,23 +7,26 @@ export class Repository implements IRepository {
     constructor(modelDB: IModelDB) {
         this.modelDB = modelDB
     }
-    async save(data: IDomain['data']): Promise<any> {
+
+    async save(data: IArray): Promise<any> {
+        const results: any[] = [];
+
         try {
-            const model = await this.modelDB.syncModel()
-            const result = await model.create({
-                ...data
-            })
-            if (result) {
-                return result
-            } else {
-                return false
+            const model = await this.modelDB.syncModel();
+
+            for (const item of data) {
+                const result = await model.create(item);
+                results.push(result);
             }
+
+            return results;
         } catch (error) {
             return false
         } finally {
             this.modelDB.desconnectModel()
         }
     }
+
     async search(data: IDomain['data']): Promise<any> {
         try {
             const model = await this.modelDB.syncModel()
@@ -33,9 +36,8 @@ export class Repository implements IRepository {
             const result = await resultJson.map((result: any) => result.toJSON());
             if (result.length > 0) {
                 return result
-            } else {
-                return false
             }
+            return false
         } catch (error) {
             return error
         } finally {
@@ -50,9 +52,8 @@ export class Repository implements IRepository {
             })
             if (result[0] > 0) {
                 return result
-            } else {
-                return false
             }
+            return false
         } catch (error) {
             return false
         } finally {
@@ -67,9 +68,8 @@ export class Repository implements IRepository {
             })
             if (result) {
                 return result
-            } else {
-                return false
             }
+            return false
         } catch (error) {
             return false
         } finally {

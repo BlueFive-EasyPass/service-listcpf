@@ -10,3 +10,5 @@ export interface IDomain {
     update(arg0: any): any
     delete(): any
 }
+
+export type IArray = IDomain['data'][];

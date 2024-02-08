@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify"
 import { InstanceManager } from "../instanceManager"
 import { IInstanceManager } from "../../interfaces/interfaceInstanceManager"
-import { IDomain } from "../../interfaces/domainInterface"
+import { IArray, IDomain } from "../../interfaces/domainInterface"
 import { IController } from "../../interfaces/interfaceController"
 import { Resource } from "fastify-autoroutes"
 
@@ -10,8 +10,10 @@ export default () => <Resource>{
     post: {
         handler: async (request: FastifyRequest, reply: FastifyReply) => {
             try {
-                const data = request.body as IDomain['data']
-                const instanceManager: IInstanceManager = new InstanceManager(data)
+                const data = request.body as IArray
+                console.log(data);
+                
+                const instanceManager: IInstanceManager = new InstanceManager(null, data)
                 const controller: IController = instanceManager.getController()
                 await controller.Save(reply)
             } catch (error) {
@@ -24,7 +26,7 @@ export default () => <Resource>{
         handler: async (request: FastifyRequest, reply: FastifyReply) => {
             try {
                 const data = request.query as IDomain['data']
-                const instanceManager: IInstanceManager = new InstanceManager(data)
+                const instanceManager: IInstanceManager = new InstanceManager(data, null)
                 const controller: IController = instanceManager.getController()
                 console.log(data);
                 console.log(instanceManager);
@@ -46,7 +48,7 @@ export default () => <Resource>{
                     return
                 }
                 const data = request.body as IDomain['data']
-                const instanceManager: IInstanceManager = new InstanceManager(data)
+                const instanceManager: IInstanceManager = new InstanceManager(data, null)
                 const controller: IController = instanceManager.getController()
                 await controller.Update(CPF, reply)
             } catch (error) {
@@ -59,7 +61,7 @@ export default () => <Resource>{
         handler: async (request: FastifyRequest, reply: FastifyReply) => {
             try {
                 const data = request.body as IDomain['data']
-                const instanceManager: IInstanceManager = new InstanceManager(data)
+                const instanceManager: IInstanceManager = new InstanceManager(data, null)
                 const controller: IController = instanceManager.getController()
                 await controller.Delete(reply)
             } catch (error) {

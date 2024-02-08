@@ -1,8 +1,12 @@
 import fastify from 'fastify';
 import type { FastifyCookieOptions } from '@fastify/cookie'
 import cookie from '@fastify/cookie'
+import multer from 'fastify-multer'; // or import multer from 'fastify-multer'
+const upload = multer({ dest: 'uploads/' })
 
 export const app: any = fastify({ logger: true });
+
+app.register(multer.contentParser)
 
 app.register(cookie, {
   secret: "easypass.ofc@gmail.com", 
@@ -16,7 +20,7 @@ app.register(require('fastify-autoroutes'), {
 const start = async () => {
   try {
     
-    await app.listen({ port: 3000 });
+    await app.listen({ port: 3002 });
     app.log.info(`Bussines Service rodando em ${app.server.address()}`);
   } catch (err) {
     app.log.error(err);
