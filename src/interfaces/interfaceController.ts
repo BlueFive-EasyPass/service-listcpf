@@ -5,4 +5,5 @@ export interface IController {
     Search(reply: FastifyReply): any
     Update(arg0: any, reply: FastifyReply): any
     Delete(reply: FastifyReply): any
+    SaveFile(reply: FastifyReply): any
 }

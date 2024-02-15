@@ -8,6 +8,15 @@ export class Service implements IService {
         this.repository = repository
     }
 
+    async savefile(array: Array<Object>): Promise<any> {
+        try {
+            const result = await this.repository.savefile(array)
+            return result
+        } catch (error) {
+            throw error
+        }
+    }
+
     async save(data: IArray): Promise<boolean> {
         try {
             const result = await this.repository.save(data)

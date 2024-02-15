@@ -1,11 +1,30 @@
-import { FastifyReply } from "fastify";
+import { FastifyReply} from "fastify";
 import { IController } from "../interfaces/interfaceController";
 import { IDomain } from "../interfaces/domainInterface";
+import { IMid } from "../interfaces/interfaceMid";
 
 export class Controller implements IController {
     private domain: IDomain
-    constructor(domain: IDomain) {
+    private mid: IMid
+
+    constructor(domain: IDomain, mid: IMid) {
         this.domain = domain
+        this.mid = mid
+    }
+
+    async SaveFile(reply: FastifyReply) {
+        try {
+            const validate = await this.mid.validateAll()
+            const result = await this.domain.savefile(validate['arrayValid'])
+            console.log(result);
+            if (result['successful'][0]) {
+                reply.code(200).send({ send: result, error: validate['arrayInvalid']})
+            }
+            reply.code(400).send({ failed: result, error: validate })
+
+        } catch (error) {
+            reply.code(500).send({ error: error })
+        }
     }
 
     async Save(reply: FastifyReply) {

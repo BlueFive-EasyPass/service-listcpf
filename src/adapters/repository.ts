@@ -8,6 +8,34 @@ export class Repository implements IRepository {
         this.modelDB = modelDB
     }
 
+    async savefile(array: any[]): Promise<{ successful: any[], failed: any[] }> {
+        const successful: any[] = [];
+        const failed: any[] = [];
+
+        try {
+            const model = await this.modelDB.syncModel();
+
+            for (const item of array) {
+                try {
+
+                    const result = await model.create(item);
+                    console.log(result);
+                    
+                    successful.push(result);
+                } catch (error) {
+                    failed.push(item);
+                }
+            }
+
+            return { successful, failed };
+        } catch (error) {
+            return { successful: [], failed: array };
+        } finally {
+            this.modelDB.desconnectModel();
+        }
+    }
+
+
     async save(data: IArray): Promise<any> {
         const results: any[] = [];
 

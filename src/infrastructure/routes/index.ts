@@ -13,7 +13,7 @@ export default () => <Resource>{
                 const data = request.body as IArray
                 console.log(data);
                 
-                const instanceManager: IInstanceManager = new InstanceManager(null, data)
+                const instanceManager: IInstanceManager = new InstanceManager(null, data, null)
                 const controller: IController = instanceManager.getController()
                 await controller.Save(reply)
             } catch (error) {
@@ -26,7 +26,7 @@ export default () => <Resource>{
         handler: async (request: FastifyRequest, reply: FastifyReply) => {
             try {
                 const data = request.query as IDomain['data']
-                const instanceManager: IInstanceManager = new InstanceManager(data, null)
+                const instanceManager: IInstanceManager = new InstanceManager(data, null, null)
                 const controller: IController = instanceManager.getController()
                 console.log(data);
                 console.log(instanceManager);
@@ -48,7 +48,7 @@ export default () => <Resource>{
                     return
                 }
                 const data = request.body as IDomain['data']
-                const instanceManager: IInstanceManager = new InstanceManager(data, null)
+                const instanceManager: IInstanceManager = new InstanceManager(data, null, null)
                 const controller: IController = instanceManager.getController()
                 await controller.Update(CPF, reply)
             } catch (error) {
@@ -61,7 +61,7 @@ export default () => <Resource>{
         handler: async (request: FastifyRequest, reply: FastifyReply) => {
             try {
                 const data = request.body as IDomain['data']
-                const instanceManager: IInstanceManager = new InstanceManager(data, null)
+                const instanceManager: IInstanceManager = new InstanceManager(data, null, null)
                 const controller: IController = instanceManager.getController()
                 await controller.Delete(reply)
             } catch (error) {

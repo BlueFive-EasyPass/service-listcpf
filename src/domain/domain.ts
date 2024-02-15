@@ -1,4 +1,4 @@
-import { IArray, IDomain } from "../interfaces/domainInterface";
+import { IArray, IDomain, IFile } from "../interfaces/domainInterface";
 import { IService } from "../interfaces/interfaceService";
 
 export class Domain implements IDomain {
@@ -10,6 +10,15 @@ export class Domain implements IDomain {
         this.data = data
         this.service = service
         this.array = array
+    }
+
+    async savefile(array: Array<Object>) {
+        try {
+            const result = await this.service.savefile(array)
+            return result
+        } catch (error) {
+            throw error
+        }
     }
 
     async save() {

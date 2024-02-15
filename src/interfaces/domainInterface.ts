@@ -5,10 +5,19 @@ export interface IDomain {
         list_CPF: string,
     }
 
+    savefile(arg0: any): any
     save(): any
     search(): any
     update(arg0: any): any
     delete(): any
 }
+
+export interface RowData {
+    cnpj: string;
+    tipo: string;
+    cpf: string;
+}
+
+export interface IFile<T> extends Array<T> {}
 
 export type IArray = IDomain['data'][];
